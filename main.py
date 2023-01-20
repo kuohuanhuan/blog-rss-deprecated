@@ -27,10 +27,10 @@ def rss_feed():
         feed_ent = feed_gen.add_entry()
         feed_ent.id(post['FileName'])
         feed_ent.title(post['Title'])
-        feed_ent.content(re.sub(r'\s + ', ' ', markdown(post['Content'], output_format='html')))
-        feed_ent.description(re.sub(r'\s + ', ' ', markdown(post['Content'][:60] + '...')))
+        feed_ent.content(re.sub(r'\s+', ' ', markdown(post['Content'], output_format='html')))
+        feed_ent.description(re.sub(r'\s+', ' ', markdown(post['Content'][:75] + '...')))
         feed_ent.link(href='https://nekohuan.cyou/post/'+ post['FileName'])
-        feed_ent.pubDate(post['Date'] + ' 12:00:00+0800')
+        feed_ent.pubDate(post['DateTime'] + '+0800')
 
     rss_feed = feed_gen.rss_str()
     return Response(rss_feed, mimetype='application/rss+xml')
