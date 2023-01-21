@@ -2,7 +2,6 @@ import requests
 import json
 import re
 from flask import Flask, Response
-from lxml import etree
 from feedgen.feed import FeedGenerator
 from markdown import markdown
 
