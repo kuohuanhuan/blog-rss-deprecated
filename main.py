@@ -2,6 +2,7 @@ import requests
 import json
 import re
 from flask import Flask, Response
+from lxml import etree
 from feedgen.feed import FeedGenerator
 from markdown import markdown
 
@@ -21,7 +22,6 @@ def rss_feed():
     feed_gen.description('$ cat ./khh.log')
     feed_gen.language('zh-Hant-TW')
     feed_gen.ttl(60)
-    feed_gen.rss_str(pretty=True)
 
     for post in posts:
         feed_ent = feed_gen.add_entry()
@@ -32,8 +32,8 @@ def rss_feed():
         feed_ent.link(href='https://nekohuan.cyou/post/'+ post['FileName'])
         feed_ent.pubDate(post['DateTime'] + '+0800')
 
-    rss_feed = feed_gen.rss_str()
-    return Response(rss_feed, mimetype='application/rss+xml')
+    rss_feed = feed_gen.rss_str(pretty=True)
+    return Response(rss_feed, headers={'Content-Type': 'application/rss+xml, application/xml'})
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=80)
