@@ -27,7 +27,7 @@ def rss_feed():
         feed_ent.id(post['FileName'])
         feed_ent.title(post['Title'])
         feed_ent.content(re.sub(r'\s+', ' ', markdown(post['Content'], output_format='html')))
-        feed_ent.description(re.sub(r'\s+', ' ', markdown(post['Content'][:75] + '...')))
+        feed_ent.description(post['Description'])
         feed_ent.link(href='https://nekohuan.cyou/post/'+ post['FileName'])
         feed_ent.pubDate(post['DateTime'] + '+0800')
 
