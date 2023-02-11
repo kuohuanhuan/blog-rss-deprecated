@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import re
@@ -10,11 +11,16 @@ app = Flask(__name__)
 @app.route('/atom.xml')
 
 def rss_feed():
-    response = requests.get('https://home-backend-production.up.railway.app/posts')
+    response = requests.get(
+        'https://nekohuan.cyou/api/posts/yes',
+        headers = {
+            "Authorization": f"token {os.environ['GH_PAT']}",
+        }
+    )
     posts = json.loads(response.text)
 
     feed_gen = FeedGenerator()
-    feed_gen.id('https://home-backend-production.up.railway.app')
+    feed_gen.id('https://nekohuan.cyou')
     feed_gen.title('khh.log')
     feed_gen.author({'name': 'kuohuanhuan', 'email': 'hi@nekohuan.cyou'})
     feed_gen.link(href='https://blog-rss-production.up.railway.app/atom.xml', rel='self')
@@ -24,12 +30,12 @@ def rss_feed():
 
     for post in posts:
         feed_ent = feed_gen.add_entry()
-        feed_ent.id(post['FileName'])
-        feed_ent.title(post['Title'])
-        feed_ent.content(re.sub(r'\s+', ' ', markdown(post['Content'], output_format='html')))
-        feed_ent.description(post['Description'])
-        feed_ent.link(href='https://nekohuan.cyou/post/'+ post['FileName'])
-        feed_ent.pubDate(post['DateTime'] + '+0800')
+        feed_ent.id(post['slug'])
+        feed_ent.title(post['title'])
+        feed_ent.content(re.sub(r'\s+', ' ', markdown(post['content'], output_format='html')))
+        feed_ent.description(post['description'])
+        feed_ent.link(href='https://nekohuan.cyou/post/'+ post['slug'])
+        feed_ent.pubDate(post['datetime'] + '+0800')
 
     rss_feed = feed_gen.rss_str(pretty=True)
     return Response(rss_feed, headers={'Content-Type': 'application/rss+xml, application/xml'})
