@@ -24,7 +24,7 @@ def rss_feed():
     feed_gen.id('https://nekohuan.cyou')
     feed_gen.title('khh.log')
     feed_gen.author({'name': 'kuohuanhuan', 'email': 'hi@nekohuan.cyou'})
-    feed_gen.link(href='https://blog-rss-production.up.railway.app/atom.xml', rel='self')
+    feed_gen.link(href='https://nekohuan.cyou', rel='self')
     feed_gen.description('$ cat ./khh.log')
     feed_gen.language('zh-Hant-TW')
     feed_gen.ttl(60)
