@@ -15,6 +15,7 @@ def rss_feed():
         'https://nekohuan.cyou/api/posts/yes',
         headers = {
             "Authorization": f"token {os.environ['GH_PAT']}",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 12; vivo 1919) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.167 Mobile Safari/537.36 Vivaldi/5.3.2683.49"
         }
     )
     posts = json.loads(response.text)
